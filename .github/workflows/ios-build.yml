@@ -1,0 +1,25 @@
+name: Build iOS App
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    name: Build iOS Project
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '15.0'
+
+    - name: Build App
+      run: |
+        echo "Building the iOS app..."
+        cd KaunImposter-iOS-source/KaunImposter-iOS
+        xcodebuild -project KaunImposter.xcodeproj -scheme KaunImposter -sdk iphoneos -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
